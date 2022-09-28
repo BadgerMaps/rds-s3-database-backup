@@ -48,7 +48,7 @@ if [[ -z "${S3_BUCKET}" ]]; then
 fi
 
 DATE=$(date -u '+%Y-%m-%dT%H-%M-%SZ')
-TARGET=s3://${S3_BUCKET}/${IDENTIFIER}-${DATE}.sql.gz
+TARGET=s3://${S3_BUCKET}/${DATE}-${IDENTIFIER}.dump.gz
 
 echo "Backing up ${DATABASE_HOST}/${DATABASE_NAME} to ${TARGET}"
 
@@ -59,4 +59,4 @@ export PGPASSWORD=
 
 if [[ $rc != 0 ]]; then exit $rc; fi
 
-echo "Done. Backup pushed to S3."
+echo "Done. Backup pushed to S3. ${TARGET}"
