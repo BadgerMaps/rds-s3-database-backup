@@ -47,16 +47,16 @@ if [[ -z "${S3_BUCKET}" ]]; then
   exit 1
 fi
 
-DATE=$(date -I)
+DATE=$(date -u '+%Y-%m-%dT%H-%M-%SZ')
 TARGET=s3://${S3_BUCKET}/${IDENTIFIER}-${DATE}.sql.gz
 
-echo Backing up ${DATABASE_HOST}/${DATABASE_NAME} to ${TARGET}
+echo "Backing up ${DATABASE_HOST}/${DATABASE_NAME} to ${TARGET}"
 
 export PGPASSWORD=${DATABASE_PASSWORD}
-pg_dump -Z 9 -v -h ${DATABASE_HOST} -U ${DATABASE_USER} -d ${DATABASE_NAME} | aws s3 cp --storage-class STANDARD_IA --sse aws:kms - ${TARGET}
+pg_dump -Z 9 -v -h ${DATABASE_HOST} -U ${DATABASE_USER} -d ${DATABASE_NAME} | aws s3 cp - ${TARGET}
 rc=$?
 export PGPASSWORD=
 
 if [[ $rc != 0 ]]; then exit $rc; fi
 
-echo Done
+echo "Done. Backup pushed to S3."
