@@ -1,5 +1,5 @@
 #!/bin/sh
-
+set -e
 
 ENVIRONMENT=${ENVIRONMENT:-dev}
 REGION=${AWS_REGION:-us-east-1}
