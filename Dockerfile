@@ -1,5 +1,5 @@
-FROM python:3.6-alpine
-RUN apk --update add postgresql12-client
+FROM alpine:3.7
+RUN apk --update add postgresql-client python py-pip
 RUN rm -rf /var/cache/apk/*
 RUN pip install --upgrade awscli
 
