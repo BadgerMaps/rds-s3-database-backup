@@ -41,6 +41,7 @@ TARGET=s3://${S3_BUCKET}/${DATE}-${IDENTIFIER}-${ENVIRONMENT}.dump.gz
 echo "Backing up ${DATABASE_HOST}/${DATABASE_NAME} to ${TARGET}"
 
 export PGPASSWORD=${DATABASE_PASSWORD}
+pg_dump --version
 pg_dump --clean -Fc -Z 9 --no-acl --no-owner --quote-all-identifiers -v -h ${DATABASE_HOST} -U ${DATABASE_USER} -d ${DATABASE_NAME} --schema=public | aws s3 cp - ${TARGET}
 rc=$?
 
