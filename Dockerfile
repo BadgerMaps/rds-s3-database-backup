@@ -4,7 +4,4 @@ RUN rm -rf /var/cache/apk/*
 RUN pip install --upgrade awscli
 
 WORKDIR /src
-COPY backup.sh /src
-RUN chmod +x /src/backup.sh
-
-CMD /src/backup.sh
+COPY --chmod=755 scripts/. .
