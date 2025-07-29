@@ -4,4 +4,5 @@ RUN rm -rf /var/cache/apk/*
 RUN pip install --upgrade awscli
 
 WORKDIR /src
-COPY --chmod=755 scripts/. .
+COPY scripts/. .
+RUN find . -type f -exec chmod +x {} +
